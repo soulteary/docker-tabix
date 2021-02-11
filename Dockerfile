@@ -7,8 +7,9 @@ RUN curl -L https://github.com/tabixio/tabix/archive/${TABIX_VER}.tar.gz -o tabi
     cp -r /tabix-${TABIX_VER}/build/* /usr/share/nginx/html/ && \
     rm -rf /tabix-18.07.1*
 
+# Patch index.html
+RUN curl -L https://cdn.plot.ly/plotly-1.2.0.min.js -o /usr/share/nginx/html/scripts/plotly-1.2.0.min.js && sed -i "s/https:\/\/cdn.plot.ly/\/scripts/" /usr/share/nginx/html/index.html
+# Remove webfont from CDN
 ENV APP_VER 721d08f0a8
-
-RUN curl -L https://cdn.plot.ly/plotly-1.2.0.min.js -o /usr/share/nginx/html/scripts/plotly-1.2.0.min.js && \
-    cat /usr/share/nginx/html/index.html | sed -e "s/https:\/\/cdn.plot.ly/\/scripts/" | tee /usr/share/nginx/html/index.html && \
-    cat /usr/share/nginx/html/styles/app-${APP_VER}.css | sed -e "s/https:\/\/fonts.googleapis.com\/css?family=Inconsolata//" | sed -e "s/@import url();//" | cat /usr/share/nginx/html/styles/app-${APP_VER}.css
+RUN sed -i "s/https:\/\/fonts.googleapis.com\/css?family=Inconsolata//" /usr/share/nginx/html/styles/app-${APP_VER}.css && \
+    sed -i "s/@import url();//" /usr/share/nginx/html/styles/app-${APP_VER}.css

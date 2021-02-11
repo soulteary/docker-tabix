@@ -1,2 +1,4 @@
-# docker-tabix
-Tabix Docker Image,  Version 18.07.1.
+# Docker Tabix
+
+Tabix Docker Image, Version 18.07.1.
+
